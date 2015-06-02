@@ -1,0 +1,207 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище newBaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="10" />
+          <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" />
+          <Property Name="Numer" Type="int" />
+          <Property Name="GrupaId" Type="int" />
+          <Property Name="StanowiskoId" Type="int" />
+          <Property Name="BirthData" Type="date" />
+          <Property Name="Pesel" Type="int" />
+          <Property Name="Plec" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Grupa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Grupa" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <EntityType Name="Stanowisko">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Stanowisko" Type="nchar" MaxLength="10" />
+        </EntityType>
+        <Association Name="FK_Employee_ToTable">
+          <End Role="Grupa" Type="Self.Grupa" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GrupaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_ToTable_1">
+          <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanowisko">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="StanowiskoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище newBaseModelContainer">
+          <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Grupa" EntityType="Self.Grupa" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+            <End Role="Grupa" EntitySet="Grupa" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_ToTable_1" Association="Self.FK_Employee_ToTable_1">
+            <End Role="Stanowisko" EntitySet="Stanowisko" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="newBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Numer" Type="Int32" />
+          <Property Name="GrupaId" Type="Int32" />
+          <Property Name="StanowiskoId" Type="Int32" />
+          <Property Name="BirthData" Type="DateTime" Precision="0" />
+          <Property Name="Pesel" Type="Int32" />
+          <Property Name="Plec" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Grupa" Relationship="Self.FK_Employee_ToTable" FromRole="Employee" ToRole="Grupa" />
+          <NavigationProperty Name="Stanowisko" Relationship="Self.FK_Employee_ToTable_1" FromRole="Employee" ToRole="Stanowisko" />
+        </EntityType>
+        <EntityType Name="Grupa">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Grupa1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_ToTable" FromRole="Grupa" ToRole="Employee" />
+        </EntityType>
+        <EntityType Name="Stanowisko">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Stanowisko1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_ToTable_1" FromRole="Stanowisko" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Employee_ToTable">
+          <End Role="Grupa" Type="Self.Grupa" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Grupa">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="GrupaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employee_ToTable_1">
+          <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="0..1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Stanowisko">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="StanowiskoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="newBaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employee" EntityType="Self.Employee" />
+          <EntitySet Name="Grupa" EntityType="Self.Grupa" />
+          <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" />
+          <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+            <End Role="Grupa" EntitySet="Grupa" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employee_ToTable_1" Association="Self.FK_Employee_ToTable_1">
+            <End Role="Stanowisko" EntitySet="Stanowisko" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище newBaseModelContainer" CdmEntityContainer="newBaseEntities">
+          <EntitySetMapping Name="Employee">
+            <EntityTypeMapping TypeName="newBaseModel.Employee">
+              <MappingFragment StoreEntitySet="Employee">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+                <ScalarProperty Name="Numer" ColumnName="Numer" />
+                <ScalarProperty Name="GrupaId" ColumnName="GrupaId" />
+                <ScalarProperty Name="StanowiskoId" ColumnName="StanowiskoId" />
+                <ScalarProperty Name="BirthData" ColumnName="BirthData" />
+                <ScalarProperty Name="Pesel" ColumnName="Pesel" />
+                <ScalarProperty Name="Plec" ColumnName="Plec" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Grupa">
+            <EntityTypeMapping TypeName="newBaseModel.Grupa">
+              <MappingFragment StoreEntitySet="Grupa">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Grupa1" ColumnName="Grupa" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Stanowisko">
+            <EntityTypeMapping TypeName="newBaseModel.Stanowisko">
+              <MappingFragment StoreEntitySet="Stanowisko">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Stanowisko1" ColumnName="Stanowisko" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

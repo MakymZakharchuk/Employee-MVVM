@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="newBaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Name" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Nazwisko" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Numer" Type="Int32" />
+    <Property Name="GrupaId" Type="Int32" />
+    <Property Name="StanowiskoId" Type="Int32" />
+    <Property Name="BirthData" Type="DateTime" Precision="0" />
+    <Property Name="Pesel" Type="Int32" />
+    <Property Name="Plec" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Grupa" Relationship="Self.FK_Employee_ToTable" FromRole="Employee" ToRole="Grupa" />
+    <NavigationProperty Name="Stanowisko" Relationship="Self.FK_Employee_ToTable_1" FromRole="Employee" ToRole="Stanowisko" />
+  </EntityType>
+  <EntityType Name="Grupa">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Grupa1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_ToTable" FromRole="Grupa" ToRole="Employee" />
+  </EntityType>
+  <EntityType Name="Stanowisko">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" />
+    <Property Name="Stanowisko1" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Employee" Relationship="Self.FK_Employee_ToTable_1" FromRole="Stanowisko" ToRole="Employee" />
+  </EntityType>
+  <Association Name="FK_Employee_ToTable">
+    <End Role="Grupa" Type="Self.Grupa" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grupa">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="GrupaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_ToTable_1">
+    <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stanowisko">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="StanowiskoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="newBaseEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Employee" EntityType="Self.Employee" />
+    <EntitySet Name="Grupa" EntityType="Self.Grupa" />
+    <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" />
+    <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+      <End Role="Grupa" EntitySet="Grupa" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_ToTable_1" Association="Self.FK_Employee_ToTable_1">
+      <End Role="Stanowisko" EntitySet="Stanowisko" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

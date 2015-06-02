@@ -1,0 +1,36 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="Хранилище newBaseModelContainer" CdmEntityContainer="newBaseEntities">
+    <EntitySetMapping Name="Employee">
+      <EntityTypeMapping TypeName="newBaseModel.Employee">
+        <MappingFragment StoreEntitySet="Employee">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Nazwisko" ColumnName="Nazwisko" />
+          <ScalarProperty Name="Numer" ColumnName="Numer" />
+          <ScalarProperty Name="GrupaId" ColumnName="GrupaId" />
+          <ScalarProperty Name="StanowiskoId" ColumnName="StanowiskoId" />
+          <ScalarProperty Name="BirthData" ColumnName="BirthData" />
+          <ScalarProperty Name="Pesel" ColumnName="Pesel" />
+          <ScalarProperty Name="Plec" ColumnName="Plec" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Grupa">
+      <EntityTypeMapping TypeName="newBaseModel.Grupa">
+        <MappingFragment StoreEntitySet="Grupa">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Grupa1" ColumnName="Grupa" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Stanowisko">
+      <EntityTypeMapping TypeName="newBaseModel.Stanowisko">
+        <MappingFragment StoreEntitySet="Stanowisko">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Stanowisko1" ColumnName="Stanowisko" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

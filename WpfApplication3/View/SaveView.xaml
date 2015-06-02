@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="WpfApplication3.View.SaveView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="325">
+    <Grid Margin="4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="15"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+
+        </Grid.RowDefinitions>
+
+
+
+        <TextBlock TextWrapping="Wrap" Text="ID:"/>
+        <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="Name:"/>
+        <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Nazwisko:"/>
+        <TextBlock Grid.Row="3" TextWrapping="Wrap" Text="Numer:"/>
+        <TextBlock Grid.Row="4" TextWrapping="Wrap" Text="Grupa:"/>
+        <TextBlock Grid.Row="5" TextWrapping="Wrap" Text="Stanowisko:"/>
+        <TextBlock Grid.Row="6" TextWrapping="Wrap" Text="Data urodzienia:"/>
+        <TextBlock Grid.Row="7" TextWrapping="Wrap" Text="Pesel:"/>
+        <TextBlock Grid.Row="8" TextWrapping="Wrap" Text="Plec:"/>
+
+        <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding Id,Mode=OneTime}"/>
+        <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" 
+                 Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" 
+                 Text="{Binding Nazwisko, Mode=OneTime,UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" 
+                 Text="{Binding Numer, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+
+        <ComboBox x:Name="GrupaComboBox" Grid.Column="1" Grid.Row="4"
+                 ItemsSource="{Binding Source={StaticResource GrupaViewModel}, Mode=OneTime}"
+            DisplayMemberPath="Grupa1"
+            SelectedItem="{Binding Path=GrupaId, ValidatesOnDataErrors=True}"
+            SelectedValuePath="Id"/>
+        <ComboBox x:Name="StanowiskoComboBox" Grid.Column="1" Grid.Row="5"
+             ItemsSource="{Binding Source={StaticResource StanowiskoViewModel}, Mode=OneTime}"
+             DisplayMemberPath="Stanowisko1"
+             SelectedItem="{Binding Path=StanowiskoId, ValidatesOnDataErrors=True}"
+             SelectedValuePath="Id"/>
+
+        <TextBox Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" Text=""/>
+        
+
+
+        <TextBox Grid.Column="1" Grid.Row="7" 
+                 TextWrapping="Wrap" Text="{Binding Pesel, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+        <TextBox Grid.Column="1" Grid.Row="8" 
+                 TextWrapping="Wrap" 
+                 Text="{Binding Plec, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+
+
+        <Button Content="ADD" Grid.Column="1" 
+                HorizontalAlignment="Left" Grid.Row="12"
+                Command="{Binding AddCommand}"
+                VerticalAlignment="Top" Width="75" Margin="10,57,0,-44"/>
+
+        <Button Content="Save" Grid.Column="1" 
+                HorizontalAlignment="Left" Margin="100,57,0,-43" 
+                Grid.Row="12" VerticalAlignment="Top"
+                Command="{Binding SaveCommand}"
+                Width="75" RenderTransformOrigin="0.493,-0.1"/>
+    </Grid>
+</UserControl>

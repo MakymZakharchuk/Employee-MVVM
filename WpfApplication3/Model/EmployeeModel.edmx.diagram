@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2145d01d5f7243a2bdab568e2e7d4718" Name="Diagram1">
+        <EntityTypeShape EntityType="newBaseModel.Employee" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="newBaseModel.Grupa" Width="1.5" PointX="1" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="newBaseModel.Stanowisko" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="newBaseModel.FK_Employee_ToTable" ManuallyRouted="false" />
+        <AssociationConnector Association="newBaseModel.FK_Employee_ToTable_1" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

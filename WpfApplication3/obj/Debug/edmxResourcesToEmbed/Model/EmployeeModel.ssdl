@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="Хранилище newBaseModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Employee">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Name" Type="nchar" MaxLength="10" />
+    <Property Name="Nazwisko" Type="nvarchar" MaxLength="50" />
+    <Property Name="Numer" Type="int" />
+    <Property Name="GrupaId" Type="int" />
+    <Property Name="StanowiskoId" Type="int" />
+    <Property Name="BirthData" Type="date" />
+    <Property Name="Pesel" Type="int" />
+    <Property Name="Plec" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Grupa">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Grupa" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <EntityType Name="Stanowisko">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
+    <Property Name="Stanowisko" Type="nchar" MaxLength="10" />
+  </EntityType>
+  <Association Name="FK_Employee_ToTable">
+    <End Role="Grupa" Type="Self.Grupa" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Grupa">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="GrupaId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Employee_ToTable_1">
+    <End Role="Stanowisko" Type="Self.Stanowisko" Multiplicity="0..1" />
+    <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Stanowisko">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Employee">
+        <PropertyRef Name="StanowiskoId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="Хранилище newBaseModelContainer">
+    <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Grupa" EntityType="Self.Grupa" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Stanowisko" EntityType="Self.Stanowisko" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Employee_ToTable" Association="Self.FK_Employee_ToTable">
+      <End Role="Grupa" EntitySet="Grupa" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Employee_ToTable_1" Association="Self.FK_Employee_ToTable_1">
+      <End Role="Stanowisko" EntitySet="Stanowisko" />
+      <End Role="Employee" EntitySet="Employee" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
