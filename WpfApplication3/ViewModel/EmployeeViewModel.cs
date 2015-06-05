@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Data.Entity;
 using System.Linq;
 using System.Windows;
 using System.Windows.Documents;
@@ -31,7 +32,7 @@ namespace WpfApplication3.ViewModel
 
         public ObservableCollection<Employee> ListEmployees;
 
-        Employee currentEmployee { get; set; }
+        private Employee currentEmployee;
 
         public EmployeeViewModel()
         {
@@ -39,34 +40,43 @@ namespace WpfApplication3.ViewModel
 
             DataBaseEntities = new newBaseEntities();
 
-            ListEmployees = new ObservableCollection<Employee>(servicePr.GetAllEmployees());
+            //  ListEmployees = new ObservableCollection<Employee>(servicePr.GetAllEmployees());
+            ListEmployees = new ObservableCollection<Employee>();
 
-            //var emplo = DataBaseEntities.Employee;
+            var emplo = DataBaseEntities.Employee;
 
-            //var query = from employee in emplo
-            //            orderby employee.Name
-            //            select employee;
+            var query = from employee in emplo
+                        orderby employee.Name
+                        select employee;
 
-            //foreach (Employee em in query)
-            //{
-            //    ListEmployees.Add(em);
-            //}
+            foreach (Employee em in query)
+            {
+                ListEmployees.Add(em);
+            }
             currentEmployee = new Employee();
+
+            SelectedEmployee = new Employee();
+            gr = new Grupa();
         }
 
-       
+
+
+        private Grupa gr;
 
         void SaveEmployee()
         {
-            currentEmployee.Id = this.SelectedEmployee.Id;
-            currentEmployee.Name = this.SelectedEmployee.Name;
-            currentEmployee.Nazwisko = this.SelectedEmployee.Nazwisko;
-            currentEmployee.Numer = this.SelectedEmployee.Numer;
-            currentEmployee.GrupaId = this.SelectedEmployee.GrupaId;
-            currentEmployee.StanowiskoId = this.SelectedEmployee.StanowiskoId;
-            currentEmployee.BirthData = this.SelectedEmployee.BirthData;
-            currentEmployee.Pesel = this.SelectedEmployee.Pesel;
-            currentEmployee.Plec = this.SelectedEmployee.Plec;
+            //currentEmployee.Id = this.SelectedEmployee.Id;
+            //currentEmployee.Name = this.SelectedEmployee.Name;
+            //currentEmployee.Nazwisko = this.SelectedEmployee.Nazwisko;
+            //currentEmployee.Numer = this.SelectedEmployee.Numer;
+            //currentEmployee.GrupaId = this.SelectedEmployee.GrupaId;
+            //currentEmployee.StanowiskoId = this.SelectedEmployee.StanowiskoId;
+            //currentEmployee.BirthData = this.SelectedEmployee.BirthData;
+            //currentEmployee.Pesel = this.SelectedEmployee.Pesel;
+            //currentEmployee.Plec = this.SelectedEmployee.Plec;
+
+            SelectedEmployee.Id = Id;
+            SelectedEmployee.Name = Name;
 
             DataBaseEntities.SaveChanges();
         }
@@ -97,59 +107,153 @@ namespace WpfApplication3.ViewModel
         }
 
         #endregion
-        
-        #region Command Object Declarations
 
+        #region Properties for Save /add
+        // private int _id;
+        public int Id
+        {
+            get { return currentEmployee.Id; }
+            set
+            {
+                currentEmployee.Id = value;
+                OnPropertyChange("Id");
+            }
+        }
+
+        public string Name
+        {
+            get { return currentEmployee.Name; }
+            set
+            {
+                currentEmployee.Name = value;
+                OnPropertyChange("Name");
+            }
+        }
+
+        public string Nazwisko
+        {
+            get { return currentEmployee.Nazwisko; }
+            set
+            {
+                currentEmployee.Nazwisko = value;
+                OnPropertyChange("Nazwisko");
+            }
+        }
+
+        public Nullable<int> Numer
+        {
+            get
+            { return currentEmployee.Numer; }
+            set
+            {
+                currentEmployee.Numer = value;
+                OnPropertyChange("Numer");
+            }
+        }
+
+        public Grupa GrupaId
+        {
+            get { return gr; }
+            set
+            {
+                gr = value;
+                OnPropertyChange("GrupaId");
+            }
+        }
+
+        public Nullable<int> StanowiskoId
+        {
+            get { return currentEmployee.StanowiskoId; }
+            set
+            {
+                currentEmployee.StanowiskoId = value;
+                OnPropertyChange("StanowiskoId");
+            }
+        }
+
+        public Nullable<System.DateTime> BirthData
+        {
+            get { return currentEmployee.BirthData; }
+            set
+            {
+                currentEmployee.BirthData = value;
+                OnPropertyChange("BirthData");
+            }
+        }
+
+        public Nullable<int> Pesel
+        {
+            get { return currentEmployee.Pesel; }
+            set
+            {
+                currentEmployee.Pesel = value;
+                OnPropertyChange("Pesel");
+            }
+        }
+
+        public string Plec
+        {
+            get { return currentEmployee.Plec; }
+            set
+            {
+                currentEmployee.Plec = value;
+                OnPropertyChange("Plec");
+            }
+        }
+
+        #endregion
+
+        #region Command Object Declarations
 
         private RelayCommand _addCommand;
         private RelayCommand _saveCommand;
 
         public ICommand AddCommand
         {
-            get { return _addCommand ?? (_addCommand = new RelayCommand(Add)); }
+            get { return _addCommand = new RelayCommand(param => Add(), param => !CanSave); }
         }
-
-       
-        private void Add(object o)
-        {
-            var e = new Employee()
-            {
-                Id = 6,
-               Name= "qwrqwr",
-               GrupaId = 2,
-
-            };
-            
-
-            ListEmployees.Add(e);
-            //servicePr.AddEmployee(e);
-
-            //ListEmployees = new ObservableCollection<Employee>(servicePr.GetAllEmployees());
-        }
-
 
         public ICommand SaveCommand
         {
-            get {
-                if (_saveCommand==null)
-                {
-                    _saveCommand = new RelayCommand(Save,CanSave);
-                }
-                return _saveCommand;
-            }
+            get { return _saveCommand = new RelayCommand(param => Save(), param => CanSave); }
         }
 
-        bool CanSave(object arg)
+        private void Add()
         {
-            return true;
+            Employee newEmployee = new Employee();
+
+            newEmployee.Id = Id;
+            newEmployee.Name = Name;
+            newEmployee.Nazwisko = Nazwisko;
+            newEmployee.Numer = Numer;
+
+            newEmployee.Grupa = SelectedEmployee.Grupa;
+            newEmployee.StanowiskoId = SelectedEmployee.StanowiskoId;
+
+            newEmployee.BirthData = BirthData;
+            newEmployee.Pesel = Pesel;
+            newEmployee.Plec = Plec;
+
+            DataBaseEntities.Employee.Add(newEmployee);
+            ListEmployees.Add(newEmployee);
+            SelectedEmployee = newEmployee;
         }
 
-        private void Save(object o)
+        bool CanSave
         {
-           // servicePr.Save();
+            get { return DataBaseEntities.ChangeTracker.HasChanges(); }
+        }
 
-            SaveEmployee();
-            
+        private void Save()
+        {
+            // servicePr.Save();
+
+          //  SaveEmployee();
+
+            DataBaseEntities.Entry(SelectedEmployee).State = SelectedEmployee.Id == 0
+                ? EntityState.Added
+                : EntityState.Modified;
+            DataBaseEntities.SaveChanges();
         }
 
         #endregion
