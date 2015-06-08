@@ -3,10 +3,7 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Data.Entity;
 using System.Linq;
-using System.Windows;
-using System.Windows.Documents;
 using System.Windows.Input;
-using WpfApplication3.Common;
 using WpfApplication3.Model;
 
 namespace WpfApplication3.ViewModel
@@ -25,9 +22,6 @@ namespace WpfApplication3.ViewModel
 
         #endregion
 
-
-        private IDataService servicePr;
-
         public static newBaseEntities DataBaseEntities { get; set; }
 
         public ObservableCollection<Employee> ListEmployees;
@@ -36,11 +30,8 @@ namespace WpfApplication3.ViewModel
 
         public EmployeeViewModel()
         {
-            servicePr = new Service();
-
             DataBaseEntities = new newBaseEntities();
 
-            //  ListEmployees = new ObservableCollection<Employee>(servicePr.GetAllEmployees());
             ListEmployees = new ObservableCollection<Employee>();
 
             var emplo = DataBaseEntities.Employee;
@@ -57,29 +48,12 @@ namespace WpfApplication3.ViewModel
 
             SelectedEmployee = new Employee();
             gr = new Grupa();
+            stan = new Stanowisko();
         }
-
 
 
         private Grupa gr;
-
-        void SaveEmployee()
-        {
-            //currentEmployee.Id = this.SelectedEmployee.Id;
-            //currentEmployee.Name = this.SelectedEmployee.Name;
-            //currentEmployee.Nazwisko = this.SelectedEmployee.Nazwisko;
-            //currentEmployee.Numer = this.SelectedEmployee.Numer;
-            //currentEmployee.GrupaId = this.SelectedEmployee.GrupaId;
-            //currentEmployee.StanowiskoId = this.SelectedEmployee.StanowiskoId;
-            //currentEmployee.BirthData = this.SelectedEmployee.BirthData;
-            //currentEmployee.Pesel = this.SelectedEmployee.Pesel;
-            //currentEmployee.Plec = this.SelectedEmployee.Plec;
-
-            SelectedEmployee.Id = Id;
-            SelectedEmployee.Name = Name;
-
-            DataBaseEntities.SaveChanges();
-        }
+        private Stanowisko stan;
 
 
         #region Properties
@@ -151,22 +125,22 @@ namespace WpfApplication3.ViewModel
             }
         }
 
-        public Grupa GrupaId
+        public int GrupaId
         {
-            get { return gr; }
+            get { return gr.Id; }
             set
             {
-                gr = value;
+                gr.Id = value;
                 OnPropertyChange("GrupaId");
             }
         }
 
-        public Nullable<int> StanowiskoId
+        public int StanowiskoId
         {
-            get { return currentEmployee.StanowiskoId; }
+            get { return stan.Id; }
             set
             {
-                currentEmployee.StanowiskoId = value;
+                stan.Id = value;
                 OnPropertyChange("StanowiskoId");
             }
         }
@@ -227,12 +201,12 @@ namespace WpfApplication3.ViewModel
             newEmployee.Nazwisko = Nazwisko;
             newEmployee.Numer = Numer;
 
-            newEmployee.Grupa = SelectedEmployee.Grupa;
-            newEmployee.StanowiskoId = SelectedEmployee.StanowiskoId;
+            newEmployee.GrupaId = GrupaId;
+            newEmployee.StanowiskoId = StanowiskoId;
 
             newEmployee.BirthData = BirthData;
             newEmployee.Pesel = Pesel;
-            newEmployee.Plec = Plec;
+            newEmployee.Plec = Plec; 
 
             DataBaseEntities.Employee.Add(newEmployee);
             ListEmployees.Add(newEmployee);
@@ -246,10 +220,6 @@ namespace WpfApplication3.ViewModel
 
         private void Save()
         {
-            // servicePr.Save();
-
-          //  SaveEmployee();
-
             DataBaseEntities.Entry(SelectedEmployee).State = SelectedEmployee.Id == 0
                 ? EntityState.Added
                 : EntityState.Modified;

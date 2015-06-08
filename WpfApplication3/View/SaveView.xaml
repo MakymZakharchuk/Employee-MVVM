@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="325">
-    <Grid Margin="4">
+    <Grid Margin="4" >
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition Width="*"/>
@@ -28,8 +28,6 @@
 
         </Grid.RowDefinitions>
 
-
-
         <TextBlock TextWrapping="Wrap" Text="ID:"/>
         <TextBlock Grid.Row="1" TextWrapping="Wrap" Text="Name:"/>
         <TextBlock Grid.Row="2" TextWrapping="Wrap" Text="Nazwisko:"/>
@@ -40,34 +38,39 @@
         <TextBlock Grid.Row="7" TextWrapping="Wrap" Text="Pesel:"/>
         <TextBlock Grid.Row="8" TextWrapping="Wrap" Text="Plec:"/>
 
-        <TextBox Grid.Column="1" TextWrapping="Wrap" Text="{Binding Id,Mode=OneTime}"/>
+        <TextBox  Grid.Column="1" TextWrapping="Wrap" Text="{Binding Id, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="1" TextWrapping="Wrap" 
-                 Text="{Binding Name,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Name ,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="2" TextWrapping="Wrap" 
-                 Text="{Binding Nazwisko, Mode=OneTime,UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Nazwisko, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="3" TextWrapping="Wrap" 
-                 Text="{Binding Numer, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Numer,  UpdateSourceTrigger=PropertyChanged}"/>
 
         <ComboBox x:Name="GrupaComboBox" Grid.Column="1" Grid.Row="4"
-                 ItemsSource="{Binding Source={StaticResource GrupaViewModel}, Mode=OneTime}"
+            ItemsSource="{Binding Source={StaticResource GrupaViewModel}}"
             DisplayMemberPath="Grupa1"
-            SelectedItem="{Binding Path=GrupaId, ValidatesOnDataErrors=True}"
-            SelectedValuePath="Id"/>
+            SelectedValuePath="Id"
+            SelectedItem="{Binding Path=GrupaId, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
+            SelectedValue="{Binding Path=GrupaId,Mode=TwoWay}"/>
+
         <ComboBox x:Name="StanowiskoComboBox" Grid.Column="1" Grid.Row="5"
-             ItemsSource="{Binding Source={StaticResource StanowiskoViewModel}, Mode=OneTime}"
-             DisplayMemberPath="Stanowisko1"
-             SelectedItem="{Binding Path=StanowiskoId, ValidatesOnDataErrors=True}"
-             SelectedValuePath="Id"/>
+            ItemsSource="{Binding Source={StaticResource StanowiskoViewModel}}"
+            DisplayMemberPath="Stanowisko1"
+            SelectedValuePath="Id"
+            SelectedItem="{Binding Path=StanowiskoId,Mode=TwoWay}"
+             SelectedValue="{Binding Path=StanowiskoId,Mode=TwoWay}"
+                  />
 
-        <TextBox Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" Text=""/>
-        
-
+        <TextBox Grid.Column="1" Grid.Row="6" TextWrapping="Wrap" 
+                 Text="{Binding BirthData, StringFormat={}{0:dd\.}{0:MM\.}{0:yyyy}}"/>
+        <DatePicker Grid.Column="1" Grid.Row="6"
+                SelectedDate="{Binding BirthData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
         <TextBox Grid.Column="1" Grid.Row="7" 
-                 TextWrapping="Wrap" Text="{Binding Pesel, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                 TextWrapping="Wrap" Text="{Binding Pesel,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         <TextBox Grid.Column="1" Grid.Row="8" 
                  TextWrapping="Wrap" 
-                 Text="{Binding Plec, Mode=OneTime, UpdateSourceTrigger=PropertyChanged}"/>
+                 Text="{Binding Plec,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"/>
 
 
         <Button Content="ADD" Grid.Column="1" 

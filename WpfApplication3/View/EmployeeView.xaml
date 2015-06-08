@@ -13,7 +13,7 @@
                   ItemsSource="{Binding Employee}"
             SelectedItem="{Binding SelectedEmployee}"
                   HorizontalAlignment="Left"
-                  IsReadOnly="True"
+                  IsReadOnly="False"
                   RowHeight="25"
                   CanUserAddRows="False"
                   CanUserDeleteRows="False"

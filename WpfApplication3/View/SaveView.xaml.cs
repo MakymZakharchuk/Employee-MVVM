@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using WpfApplication3.ViewModel;
 
 namespace WpfApplication3.View
 {
@@ -23,6 +24,7 @@ namespace WpfApplication3.View
         public SaveView()
         {
             InitializeComponent();
+
         }
     }
 }

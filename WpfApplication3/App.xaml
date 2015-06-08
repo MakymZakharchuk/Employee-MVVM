@@ -13,9 +13,8 @@
             <DatePicker SelectedDate="{Binding BirthData, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
         </DataTemplate>
 
-
         <vm:GrupaViewModel x:Key="GrupaViewModel"/>
         <vm:StanowiskoViewModel x:Key="StanowiskoViewModel"/>
-
+        
     </Application.Resources>
 </Application>
